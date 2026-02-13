@@ -8,10 +8,10 @@ The pipeline follows the **Medallion Architecture** using three separate DLT pip
 
 ### Components
 
-- **[bronze.py](./crypto_pipeline/bronze.py)**: Ingests raw JSON ticker data from the Azure Data Lake `raw` container using **Auto Loader**.
-- **[silver.py](./crypto_pipeline/silver.py)**: Performs data typing (casting prices/volumes), timestamp conversion, and deduplication.
-- **[gold.py](./crypto_pipeline/gold.py)**: Aggregates metrics (average price, total volume) over a 5-minute sliding window.
-- **[producer.py](./crypto_pipeline/producer.py)**: A standalone Python script that fetches real-time prices from Binance (via CCXT) and uploads files to Azure Storage.
+- **[bronze.py](./scripts/bronze.py)**: Ingests raw JSON ticker data from the Azure Data Lake `raw` container using **Auto Loader**.
+- **[silver.py](./scripts/silver.py)**: Performs data typing (casting prices/volumes), timestamp conversion, and deduplication.
+- **[gold.py](./scripts/gold.py)**: Aggregates metrics (average price, total volume) over a 5-minute sliding window.
+- **[producer.py](./scripts/producer.py)**: A standalone Python script that fetches real-time prices from Binance (via CCXT) and uploads files to Azure Storage.
 
 ## ⚙️ Dynamic Configuration
 
@@ -44,8 +44,9 @@ In the `azure-databricks-lakehouse` repo:
 Run the producer locally or as a container:
 
 ```bash
+pip install -r requirements.txt
 export AZURE_STORAGE_CONNECTION_STRING="your-connection-string"
-python crypto_pipeline/producer.py
+python scripts/producer.py
 ```
 
 ### 4. Run Pipelines
